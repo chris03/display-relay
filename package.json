@@ -1,0 +1,17 @@
+{
+  "name": "display-relay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --recursive --reporter $(REPORTER) --timeout 3000",
+    "start": "node index.js"
+  },
+  "author": "Chris03",
+  "license": "ISC",
+  "dependencies": {
+    "http": "0.0.0",
+    "request": "^2.83.0",
+    "xml2js": "^0.4.19"
+  }
+}

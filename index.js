@@ -1,16 +1,18 @@
 const weather = require('./app/weather.js');
+const sensors = require('./app/sensors.js');
 const http = require('http')
 const port = 3000
 
 const requestHandler = (request, response) => {
-    console.log('Request: ', request.url);
-
     response.setHeader('Content-Type', 'application/json');
+    
+    Promise.all([weather.getWeather(), sensors.getSensors()]).then(function (values) {
+        var result = {};
+        values.forEach(i => Object.assign(result, i));
 
-    weather.getWeather().then(function (data) {
-//        console.log(data);
+        // console.log(result);
 
-        response.end(JSON.stringify(data));
+        response.end(JSON.stringify(result));
     });
 };
 

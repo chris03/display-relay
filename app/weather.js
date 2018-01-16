@@ -36,10 +36,11 @@ function getWeather() {
 
                     var actual = filterEntryByCategory(entries, 'actuelles').map(i => {
                         var pos1 = i.title.indexOf(':');
-                        var pos2 = i.title.indexOf(',')
+                        var pos2 = i.title.indexOf(',');
+                        var temp = parseFloat(i.title.substring(pos2 + 1).trim().replace(',','.').replace('C','')).toFixed(0);
                         return {
-                            'temp': i.title.substring(pos2 + 1).trim(),
-                            'desc': i.title.substring(pos1, pos2).trim()
+                            'temp': temp,
+                            'desc': i.title.substring(pos1+1, pos2).trim()
                         };
                     })[0];
 
@@ -47,9 +48,13 @@ function getWeather() {
 
                     var forecasts = filterEntryByCategory(entries, 'Prévisions').splice(0, Config.forecastsCount).map(i => {
                         var pos1 = i.title.indexOf(':');
+                        var what = i.title.substring(pos1 + 1).trim();
+
+                        what = what.replace('moins ','-').replace('Températures','Temp.');
+
                         return {
                             'when': i.title.substring(0, pos1).trim(),
-                            'what': i.title.substring(pos1 + 1).trim()
+                            'what': what
                         };
                     });
 

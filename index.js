@@ -8,7 +8,7 @@ const requestHandler = (request, response) => {
     response.setHeader('Content-Type', 'application/json');
 
     weather.getWeather().then(function (data) {
-        console.log(data);
+//        console.log(data);
 
         response.end(JSON.stringify(data));
     });

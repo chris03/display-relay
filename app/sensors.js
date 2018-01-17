@@ -1,29 +1,5 @@
 const Config = {
-    url: 'http://192.168.1.3:8080/json.htm?type=devices&filter=all&used=true',
-    sensors: {
-        pool: {
-            waterId: "43",
-            heatId: "46",
-            flowId: "48",
-            luxId: "47",
-            energyId: "52",
-            pumpId: "49"
-        },
-        outside: {
-            tempHumId: "45"
-        },
-        air: {
-            tempHumId: "51"
-        },
-        arduino1: {
-            tempHumId: "38",
-            voltId: "44"
-        },
-        arduino2: {
-            tempHumId: "39",
-            voltId: "42"
-        }
-    }
+    url: 'http://192.168.1.3:8080/json.htm?type=devices&filter=all&used=true'
 };
 
 var request = require('request');
@@ -35,7 +11,7 @@ function getValue(sensors, id, property) {
 
 function getFloat(sensors, id, property) {
     var sensor = sensors.find(s => s.idx == id);
-    return sensor == undefined || sensor[property] == undefined ? '' : parseFloat(sensor[property]).toFixed(1).toString();
+    return sensor == undefined || sensor[property] == undefined ? '' : parseFloat(sensor[property]).toFixed(0).toString();
 }
 
 function getSensors() {

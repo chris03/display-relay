@@ -48,12 +48,21 @@ function getWeather() {
 
                     var forecasts = filterEntryByCategory(entries, 'Prévisions').splice(0, Config.forecastsCount).map(i => {
                         var pos1 = i.title.indexOf(':');
+                        var when = i.title.substring(0, pos1).trim();
                         var what = i.title.substring(pos1 + 1).trim();
 
-                        what = what.replace('moins ','-').replace('Températures','Temp.');
+                        when = when.replace(' et cette ','/')
+                                .replace('r et n','r/n');
+                        what = what.replace('moins ','-')
+                                   .replace('Températures','Temp.')
+                                   .replace('Minimum','Min.')
+                                   .replace('Maxmimum','Max.')
+                                   .replace('alternance','alt.')
+                                   .replace(' près de','')
+                                   .replace(' intermittente','');
 
                         return {
-                            'when': i.title.substring(0, pos1).trim(),
+                            'when': when,
                             'what': what
                         };
                     });

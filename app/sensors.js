@@ -9,19 +9,19 @@ function getValue(sensors, id, property) {
     return sensor == undefined || sensor[property] == undefined ? '' : sensor[property].toString();
 }
 
-function getFloat(sensors, id, property) {
+function getFloat(sensors, id, property, precision) {
     var sensor = sensors.find(s => s.idx == id);
-    return sensor == undefined || sensor[property] == undefined ? '' : formatNumber(parseFloat(sensor[property]).toFixed(0));
+    return sensor == undefined || sensor[property] == undefined ? '' : parseFloat(sensor[property]).toFixed(precision || 0);
 }
 
-function formatNumber(val){
+function formatNegativeNumber(val) {
     var result = val.toString();
 
-    if(Math.abs(val) < 10){
+    if (Math.abs(val) < 10) {
         result = " " + result;
     }
 
-    if(val>0){
+    if (val > 0) {
         result = " " + result;
     }
     return result;
@@ -39,30 +39,30 @@ function getSensors() {
                 // Return data
                 resolve({
                     pool: {
-                        water: getFloat(sensors, 43, 'Temp'),
-                        heat: getFloat(sensors, 46, 'Temp'),
+                        water: formatNegativeNumber(getFloat(sensors, 43, 'Temp')),
+                        heat: formatNegativeNumber(getFloat(sensors, 46, 'Temp')),
                         flow: getValue(sensors, 48, 'Data'),
                         lux: getValue(sensors, 47, 'Data'),
                         energy: getValue(sensors, 52, 'Data'),
                         pump: getValue(sensors, 49, 'Data'),
                     },
                     outside: {
-                        temp: getFloat(sensors, 45, 'Temp'),
+                        temp: formatNegativeNumber(getFloat(sensors, 45, 'Temp')),
                         hum: getValue(sensors, 45, 'Humidity') + '%',
                     },
                     air: {
-                        temp: getFloat(sensors, 51, 'Temp'),
+                        temp: getFloat(sensors, 51, 'Temp').toString(),
                         hum: getValue(sensors, 51, 'Humidity') + '%',
                     },
                     arduino1: {
-                        temp: getFloat(sensors, 38, 'Temp'),
+                        temp: getFloat(sensors, 38, 'Temp').toString(),
                         hum: getValue(sensors, 38, 'Humidity') + '%',
-                        volt: getFloat(sensors, 44, 'Voltage'),
+                        volt: getFloat(sensors, 44, 'Voltage', 2),
                     },
                     arduino2: {
-                        temp: getFloat(sensors, 39, 'Temp'),
+                        temp: getFloat(sensors, 39, 'Temp').toString(),
                         hum: getValue(sensors, 39, 'Humidity'),
-                        volt: getFloat(sensors, 42, 'Voltage'),
+                        volt: getFloat(sensors, 42, 'Voltage', 2),
                     }
                 });
             }

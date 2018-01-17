@@ -11,7 +11,20 @@ function getValue(sensors, id, property) {
 
 function getFloat(sensors, id, property) {
     var sensor = sensors.find(s => s.idx == id);
-    return sensor == undefined || sensor[property] == undefined ? '' : parseFloat(sensor[property]).toFixed(0).toString();
+    return sensor == undefined || sensor[property] == undefined ? '' : formatNumber(parseFloat(sensor[property]).toFixed(0));
+}
+
+function formatNumber(val){
+    var result = val.toString();
+
+    if(Math.abs(val) < 10){
+        result = " " + result;
+    }
+
+    if(val>0){
+        result = " " + result;
+    }
+    return result;
 }
 
 function getSensors() {
@@ -26,23 +39,23 @@ function getSensors() {
                 // Return data
                 resolve({
                     pool: {
-                        water: getFloat(sensors, 43, 'Temp') + '°',
-                        heat: getFloat(sensors, 46, 'Temp') + '°',
+                        water: getFloat(sensors, 43, 'Temp'),
+                        heat: getFloat(sensors, 46, 'Temp'),
                         flow: getValue(sensors, 48, 'Data'),
                         lux: getValue(sensors, 47, 'Data'),
                         energy: getValue(sensors, 52, 'Data'),
                         pump: getValue(sensors, 49, 'Data'),
                     },
                     outside: {
-                        temp: getFloat(sensors, 45, 'Temp') + '°',
+                        temp: getFloat(sensors, 45, 'Temp'),
                         hum: getValue(sensors, 45, 'Humidity') + '%',
                     },
                     air: {
-                        temp: getFloat(sensors, 51, 'Temp') + '°',
+                        temp: getFloat(sensors, 51, 'Temp'),
                         hum: getValue(sensors, 51, 'Humidity') + '%',
                     },
                     arduino1: {
-                        temp: getFloat(sensors, 38, 'Temp') + '°',
+                        temp: getFloat(sensors, 38, 'Temp'),
                         hum: getValue(sensors, 38, 'Humidity') + '%',
                         volt: getFloat(sensors, 44, 'Voltage'),
                     },

@@ -57,12 +57,12 @@ function getSensors() {
                     arduino1: {
                         temp: getFloat(sensors, 38, 'Temp').toString(),
                         hum: getValue(sensors, 38, 'Humidity') + '%',
-                        volt: getFloat(sensors, 44, 'Voltage', 2),
+                        volt: getFloat(sensors, 44, 'Voltage', 2) + 'V',
                     },
                     arduino2: {
                         temp: getFloat(sensors, 39, 'Temp').toString(),
-                        hum: getValue(sensors, 39, 'Humidity'),
-                        volt: getFloat(sensors, 42, 'Voltage', 2),
+                        hum: getValue(sensors, 39, 'Humidity') + '%',
+                        volt: getFloat(sensors, 42, 'Voltage', 2) + 'V',
                     }
                 });
             }

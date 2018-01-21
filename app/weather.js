@@ -56,9 +56,13 @@ function getWeather() {
                         what = what.replace('moins ','-')
                                    .replace('Températures','Temp.')
                                    .replace('Minimum','Min.')
-                                   .replace('Maxmimum','Max.')
+                                   .replace('Maximum','Max.')
+                                   .replace('Possibilité','Possib.')
+                                   .replace('d\'averses de','de')
                                    .replace('alternance','alt.')
                                    .replace(' près de','')
+                                   .replace('zéro', '0')
+                                   .replace('pluie ou de neige','pluie/neige')
                                    .replace(' intermittente','');
 
                         return {

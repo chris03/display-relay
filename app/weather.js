@@ -54,14 +54,19 @@ function getWeather() {
                         when = when.replace(' et cette ','/')
                                 .replace('r et n','r/n');
                         what = what.replace('moins ','-')
-                                   .replace('Températures','Temp.')
                                    .replace('Minimum','Min.')
                                    .replace('Maximum','Max.')
                                    .replace('Possibilité','Possib.')
                                    .replace('d\'averses de','de')
                                    .replace('alternance','alt.')
                                    .replace(' près de','')
+                                   .replace('pour atteindre','à')
                                    .replace('zéro', '0')
+                                   .replace('à la baisse', "↓")
+                                   .replace('à la hausse', "↑")
+                                   .replace('Températures','Temp.')
+                                   .replace(' ou ','/')
+                                   .replace('au cours de', 'durant')
                                    .replace('pluie ou de neige','pluie/neige')
                                    .replace(' intermittente','');
 

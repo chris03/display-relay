@@ -1,0 +1,82 @@
+<!doctype html>
+<html ng-app="Test">
+
+<head>
+    <title>Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div ng-controller="TestController">
+            <h2>Prévisions</h2>
+            <div class="panel">
+                <div class="row">
+                    <div class="col" style="border: solid 1px;">{{data.warnings}}</div>
+                </div>
+                <div class="row">
+                    <div class="col" style="border: solid 1px;">
+                        <h3>{{data.actual.temp}} {{data.actual.desc}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8" style="border: solid 1px;">
+                        <div ng-repeat="f in data.forecasts">
+                            <b>{{f.when}}</b> {{f.what}}
+                        </div>
+                    </div>
+                    <div class="col" style="border: solid 1px;">
+                        <h3 style="margin-bottom: 0px;">{{data.pool.water}}
+                            <small style="font-size: 12px">{{data.pool.heat}}</small>
+                        </h3>
+                        <div style="position: absolute; bottom: 0px; text-align: center; width: 100%;">Piscine</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" style="border: solid 1px;">
+                        <h3 style="margin-bottom: 0px;">{{data.air.temp}}
+                            <small style="font-size: 12px">{{data.air.hum}}</small>
+                        </h3>
+                        Chauffage
+                    </div>
+                    <div class="col" style="border: solid 1px;">
+                        <h3 style="margin-bottom: 0px;">{{data.outside.temp}}
+                            <small style="font-size: 12px">{{data.outside.hum}}</small>
+                        </h3>
+                        Extérieur
+                    </div>
+                    <div class="col" style="border: solid 1px;">
+                        <h3 style="margin-bottom: 0px;">{{data.arduino1.temp}}
+                            <small style="font-size: 12px">{{data.arduino1.hum}}</small>
+                            <span style="font-size: 10px; vertical-align: top;">{{data.arduino1.volt}}</span>
+                        </h3>
+                        Chambre
+                    </div>
+                    <div class="col" style="border: solid 1px;">
+                        <h3 style="margin-bottom: 0px;">{{data.arduino2.temp}}
+                            <small style="font-size: 12px">{{data.arduino2.hum}}</small>
+                            <span style="font-size: 10px; vertical-align: top;">{{data.arduino2.volt}}</span>
+                        </h3>
+                        Salon
+                    </div>
+                </div>
+            </div>
+
+            <h4>Raw Data</h4>
+            <pre class="card" ng-bind="data | json"></pre>
+        </div>
+    </div>
+    <script>
+        angular.module('Test', []).controller('TestController', ['$scope', '$http', function ($scope, $http) {
+
+            $http({ url: '/json' }).then(function (result) {
+                $scope.data = result.data;
+            });
+
+        }]);
+    </script>
+</body>
+
+</html>

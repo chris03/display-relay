@@ -53,7 +53,8 @@ function getWeather() {
 
                     return {
                         'when': when.charAt(0).toUpperCase() + when.slice(1),
-                        'what': what + ' ' + temp,
+                        'what': what,
+                        'temp': temp
                     };
                 });
 

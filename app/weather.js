@@ -1,5 +1,6 @@
 const Config = {
     url: 'http://dd.weather.gc.ca/citypage_weather/xml/QC/s0000712_f.xml',
+    // url: 'http://dd.weather.gc.ca/citypage_weather/xml/ON/s0000418_e.xml',
     forecastsCount: 4
 };
 
@@ -15,8 +16,6 @@ function getWeather() {
                 reject(error);
             } else {
 
-                // var xmlString = iconv.decode(new Buffer(body, 'latin1'), 'utf8');
-
                 var xmlDoc = libxmljs.parseXml(body);
 
                 var actual = {
@@ -24,12 +23,17 @@ function getWeather() {
                     'desc': xmlDoc.get('currentConditions/condition').text()
                 };
 
-                var warnings = '';//filterEntryByCategory(entries, 'avertissements').map(i => i.title)[0];
+                var xmlWarnings = xmlDoc.get('warnings/event');
+                var warnings = xmlWarnings && xmlWarnings.attr('description') ? xmlWarnings.attr('description').value() : '';
 
                 var forecasts = xmlDoc.find('//forecast').splice(0, Config.forecastsCount).map(i => {
                     var when = i.get('period').text();
-                    var what = i.get('abbreviatedForecast/textSummary').text();
                     var temp = i.get('temperatures/temperature').text();
+                    var what = i.get('abbreviatedForecast/textSummary').text();
+                    var iconCode = i.get('abbreviatedForecast/iconCode').text();
+                    var accumulationAmount = i.get('precipitation/accumulation/amount');
+
+                    accumulationAmount = accumulationAmount ? accumulationAmount.text() + accumulationAmount.attr('units').value() : '';
 
                     when = when.replace(' et cette ', '/')
                         .replace('r et n', 'r/n');
@@ -39,22 +43,25 @@ function getWeather() {
                         .replace('Maximum', 'Max.')
                         .replace('Possibilité', 'Possib.')
                         .replace('d\'averses de', 'de')
-                        .replace('alternance', 'alt.')
+                        .replace('lternance', 'lt.')
                         .replace(' près de', '')
                         .replace('pour atteindre', 'à')
                         .replace('zéro', '0')
                         .replace('à la baisse', "↓")
                         .replace('à la hausse', "↑")
                         .replace('Températures', 'Temp.')
-                        .replace(' ou ', '/')
                         .replace('au cours de', 'durant')
                         .replace('pluie ou de neige', 'pluie/neige')
-                        .replace(' intermittente', '');
+                        .replace('soleil et de nuages', 'soleil/nuages')
+                        .replace('intermittente', 'inter.')
+                        .replace(' ou ', '/');
 
                     return {
                         'when': when.charAt(0).toUpperCase() + when.slice(1),
                         'what': what,
-                        'temp': temp
+                        'temp': temp,
+                        'icon': iconCode,
+                        'accu': accumulationAmount
                     };
                 });
 

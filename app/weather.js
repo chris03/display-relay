@@ -36,7 +36,15 @@ function getWeather() {
                     accumulationAmount = accumulationAmount ? accumulationAmount.text() + accumulationAmount.attr('units').value() : '';
 
                     when = when.replace(' et cette ', '/')
-                        .replace('r et n', 'r/n');
+                        .replace('r et n', 'r/n')
+                        .replace('Dimanche','Dim')
+                        .replace('Lundi','Lun')
+                        .replace('Mardi','Mar')
+                        .replace('Mercredi','Mer')
+                        .replace('Jeudi','Jeu')
+                        .replace('Vendredi','Ven')
+                        .replace('Samedi','Sam');
+
                     what = what.replace('moins ', '-')
                         .replace('soleil et de nuages', 'soleil/nuages')
                         .replace('Minimum', 'Min.')

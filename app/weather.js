@@ -19,7 +19,7 @@ function getWeather() {
                 var xmlDoc = libxmljs.parseXml(body);
 
                 var actual = {
-                    'temp': parseFloat(xmlDoc.get('currentConditions/temperature').text()).toFixed(0),
+                    'temp': parseFloat(xmlDoc.get('currentConditions/temperature').text()).toFixed(0) + '°',
                     'desc': xmlDoc.get('currentConditions/condition').text()
                 };
 
@@ -28,25 +28,26 @@ function getWeather() {
 
                 var forecasts = xmlDoc.find('//forecast').splice(0, Config.forecastsCount).map(i => {
                     var when = i.get('period').text();
-                    var temp = i.get('temperatures/temperature').text();
+                    var temp = i.get('temperatures/temperature').text() + '°';
                     var what = i.get('abbreviatedForecast/textSummary').text();
                     var iconCode = i.get('abbreviatedForecast/iconCode').text();
                     var accumulationAmount = i.get('precipitation/accumulation/amount');
 
                     accumulationAmount = accumulationAmount ? accumulationAmount.text() + accumulationAmount.attr('units').value() : '';
 
-                    when = when.replace(' et cette ', '/')
-                        .replace('ce soir et nuit', 'nuit')
-                        .replace('dimanche','dim')
-                        .replace('lundi','lun')
-                        .replace('mardi','mar')
-                        .replace('mercredi','mer')
-                        .replace('jeudi','jeu')
-                        .replace('vendredi','ven')
-                        .replace('samedi','sam');
+                    when = when
+                        .replace('ce soir et cette nuit', 'cette nuit')
+                        .replace('soir et nuit', 'nuit')
+                        .replace('dimanche', 'dim')
+                        .replace('lundi', 'lun')
+                        .replace('mardi', 'mar')
+                        .replace('mercredi', 'mer')
+                        .replace('jeudi', 'jeu')
+                        .replace('vendredi', 'ven')
+                        .replace('samedi', 'sam');
 
                     what = what.replace('moins ', '-')
-                        .replace('soleil et de nuages', 'soleil/nuages')
+                        .replace('de soleil et de nuages', 'soleil/nuages')
                         .replace('Minimum', 'Min.')
                         .replace('Maximum', 'Max.')
                         .replace('Possibilité', 'Possib.')
@@ -62,6 +63,8 @@ function getWeather() {
                         .replace('pluie ou de neige', 'pluie/neige')
                         .replace('soleil et de nuages', 'soleil/nuages')
                         .replace('intermittente', 'inter.')
+                        .replace('Quelques', '±')
+                        .replace('averses', 'av.')
                         .replace(' ou ', '/');
 
                     return {

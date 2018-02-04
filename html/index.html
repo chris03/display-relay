@@ -22,10 +22,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-8" style="border: solid 1px;">
-                        <div ng-repeat="f in data.forecasts">
-                            <b>{{f.when}}</b> {{f.temp}} {{f.what}} {{f.accu}}
-                        </div>
+                    <div class="col-2" style="border: solid 1px;" ng-repeat="f in data.forecasts">
+                        <div><b>{{f.when}}</b> <span style="font-size: 20px;">{{f.temp}}</span></div>
+                        <div>{{f.what}} {{f.accu}}</div>
+                        
                     </div>
                     <div class="col" style="border: solid 1px;">
                         <h3 style="margin-bottom: 0px;">{{data.pool.water}}

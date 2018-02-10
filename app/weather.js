@@ -25,6 +25,7 @@ function getWeather() {
 
                 var xmlWarnings = xmlDoc.get('warnings/event');
                 var warnings = xmlWarnings && xmlWarnings.attr('description') ? xmlWarnings.attr('description').value() : '';
+                warnings = warnings.replace(' EN VIGUEUR', '');
 
                 var forecasts = xmlDoc.find('//forecast').splice(0, Config.forecastsCount).map(i => {
                     var when = i.get('period').text();
@@ -60,6 +61,7 @@ function getWeather() {
                         .replace('à la hausse', "↑")
                         .replace('Températures', 'Temp.')
                         .replace('au cours de', 'durant')
+                        .replace('verglaçante', 'verg.') 
                         .replace('pluie ou de neige', 'pluie/neige')
                         .replace('soleil et de nuages', 'soleil/nuages')
                         .replace('intermittente', 'inter.')

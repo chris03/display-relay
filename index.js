@@ -17,9 +17,15 @@ const jsonDataHandler = response => {
     });
 };
 
-const indexHandler = response => {
+const htmlPage = (response, fileName) => {
     response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-    var readSream = fs.createReadStream('html/index.html')
+    var readSream = fs.createReadStream(fileName);
+    readSream.pipe(response);
+};
+
+const espConfig = (response) => {
+    response.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    var readSream = fs.createReadStream('esp.json');
     readSream.pipe(response);
 };
 
@@ -29,15 +35,23 @@ const notFoundHandler = response => {
 };
 
 const requestHandler = (request, response) => {
-    switch (request.url) {
-        case "/":
-            indexHandler(response);
-            break;
-        case "/json":
-            jsonDataHandler(response);
-            break;
-        default:
-            notFoundHandler(response);
+
+    if (request.url.startsWith('/json')) {
+        jsonDataHandler(response);
+    } else {
+        switch (request.url) {
+            case "/":
+                htmlPage(response, 'html/index.html');
+                break;
+            case "/esp":
+                htmlPage(response, 'html/esp.html');
+                break;
+            case "/config":
+                espConfig(response);
+                break;
+            default:
+                notFoundHandler(response);
+        };
     }
 };
 

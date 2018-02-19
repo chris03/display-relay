@@ -1,6 +1,7 @@
 const weather = require('./app/weather.js');
 const sensors = require('./app/sensors.js');
 const http = require('http');
+const querystring = require('querystring');
 var fs = require('fs');
 const port = 3000
 
@@ -34,9 +35,28 @@ const notFoundHandler = response => {
     response.end("<h1>Not found</h1>");
 };
 
+var request = require('request');
+var send = function (params) {
+    request('http://192.168.1.3:8080/json.htm?type=command&param=udevice&' + params, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body);
+        }
+    });
+};
+
 const requestHandler = (request, response) => {
 
     if (request.url.startsWith('/json')) {
+
+        if (request.url.indexOf('?') > 0) {
+            var qs = querystring.parse(request.url.substr(request.url.indexOf('?') + 1));
+            console.log('Volts: ', qs.voltage);
+            var sensorId = 54;
+            var voltage = qs.voltage;
+            if (voltage) {
+                send('idx=' + sensorId + '&nvalue=0&svalue=' + voltage);
+            }
+        }
         jsonDataHandler(response);
     } else {
         switch (request.url) {

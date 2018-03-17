@@ -51,7 +51,7 @@ function getWeather() {
                         .replace('de soleil et de nuages', 'soleil/nuages')
                         .replace('Minimum', 'Min.')
                         .replace('Maximum', 'Max.')
-                        .replace('Possibilité', 'Possib.')
+                        .replace('Possibilité', 'P.')
                         .replace('d\'averses de', 'de')
                         .replace('Alternance ', '')
                         .replace(' près de', '')
@@ -65,6 +65,7 @@ function getWeather() {
                         .replace('pluie ou de neige', 'pluie/neige')
                         .replace('soleil et de nuages', 'soleil/nuages')
                         .replace('intermittente', 'inter.')
+                        .replace('Généralement ', '')
                         .replace('Quelques', '±')
                         .replace('averses de ', '')
                         .replace(' ou ', '/');

@@ -52,6 +52,7 @@ function getWeather() {
                         .replace('Minimum', 'Min.')
                         .replace('Maximum', 'Max.')
                         .replace('Possibilité', 'P.')
+                        .replace('Partiellement', 'Part.')
                         .replace('d\'averses de', 'de')
                         .replace('Alternance ', '')
                         .replace(' près de', '')
@@ -72,7 +73,7 @@ function getWeather() {
 
                     return {
                         'when': when.charAt(0).toUpperCase() + when.slice(1),
-                        'what': what,
+                        'what': what.charAt(0).toUpperCase() + what.slice(1),
                         'temp': temp,
                         'icon': iconCode,
                         'accu': accumulationAmount

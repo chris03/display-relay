@@ -1,5 +1,5 @@
 const Config = {
-    url: 'http://192.168.1.3:8080/json.htm?type=devices&filter=all&used=true'
+    url: 'http://127.0.0.1:8080/json.htm?type=devices&filter=all&used=true'
 };
 
 var request = require('request');

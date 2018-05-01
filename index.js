@@ -37,7 +37,7 @@ const notFoundHandler = response => {
 
 var request = require('request');
 var send = function (params) {
-    request('http://192.168.1.3:8080/json.htm?type=command&param=udevice&' + params, function (error, response, body) {
+    request('http://127.0.0.1:8080/json.htm?type=command&param=udevice&' + params, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body);
         }

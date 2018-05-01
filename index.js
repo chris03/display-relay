@@ -12,6 +12,9 @@ const jsonDataHandler = response => {
         var result = {};
         values.forEach(i => Object.assign(result, i));
 
+        var now = new Date();
+        result.sleepFor = now.getHours() > 23 && now.getHours() < 6 ? 30 : 3;
+
         // console.log(result);
 
         response.end(JSON.stringify(result));

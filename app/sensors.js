@@ -1,12 +1,12 @@
 const Config = {
-    url: 'http://127.0.0.1:8080/json.htm?type=devices&filter=all&used=true'
+    url: 'http://10.13.37.3:8080/json.htm?type=devices&filter=all&used=true'
 };
 
 var request = require('request');
 
 function getValue(sensors, id, property) {
     var sensor = sensors.find(s => s.idx == id);
-    return sensor == undefined || sensor[property] == undefined ? '' : sensor[property].toString();
+    return sensor == undefined || sensor[property] == undefined ? undefined : sensor[property];
 }
 
 function getFloat(sensors, id, property, precision) {
@@ -39,30 +39,30 @@ function getSensors() {
                 // Return data
                 resolve({
                     pool: {
-                        water: formatNegativeNumber(getFloat(sensors, 43, 'Temp')),
-                        heat: formatNegativeNumber(getFloat(sensors, 46, 'Temp')),
+                        water: getValue(sensors, 43, 'Temp'),
+                        heat: getValue(sensors, 46, 'Temp'),
                         flow: getValue(sensors, 48, 'Data'),
                         lux: getValue(sensors, 47, 'Data'),
                         energy: getValue(sensors, 52, 'Data'),
                         pump: getValue(sensors, 49, 'Data'),
                     },
                     outside: {
-                        temp: formatNegativeNumber(getFloat(sensors, 45, 'Temp')),
-                        hum: getValue(sensors, 45, 'Humidity') + '%',
+                        temp: getValue(sensors, 45, 'Temp'),
+                        hum: getValue(sensors, 45, 'Humidity'),
                     },
                     air: {
-                        temp: getFloat(sensors, 51, 'Temp').toString(),
-                        hum: getValue(sensors, 51, 'Humidity') + '%',
+                        temp: getValue(sensors, 51, 'Temp'),
+                        hum: getValue(sensors, 51, 'Humidity'),
                     },
                     arduino1: {
-                        temp: getFloat(sensors, 38, 'Temp').toString(),
-                        hum: getValue(sensors, 38, 'Humidity') + '%',
-                        volt: getFloat(sensors, 44, 'Voltage', 2) + 'V',
+                        temp: getValue(sensors, 38, 'Temp'),
+                        hum: getValue(sensors, 38, 'Humidity'),
+                        volt: getValue(sensors, 44, 'Voltage', 2),
                     },
                     arduino2: {
-                        temp: getFloat(sensors, 39, 'Temp').toString(),
-                        hum: getValue(sensors, 39, 'Humidity') + '%',
-                        volt: getFloat(sensors, 42, 'Voltage', 2) + 'V',
+                        temp: getValue(sensors, 39, 'Temp'),
+                        hum: getValue(sensors, 39, 'Humidity'),
+                        volt: getValue(sensors, 42, 'Voltage', 2),
                     }
                 });
             }

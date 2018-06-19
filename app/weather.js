@@ -19,7 +19,7 @@ function getWeather() {
                 var xmlDoc = libxmljs.parseXml(body);
 
                 var actual = {
-                    'temp': parseFloat(xmlDoc.get('currentConditions/temperature').text()).toFixed(0) + '°',
+                    'temp': Math.round(parseFloat(xmlDoc.get('currentConditions/temperature').text())),
                     'desc': xmlDoc.get('currentConditions/condition').text()
                 };
 
@@ -29,9 +29,9 @@ function getWeather() {
 
                 var forecasts = xmlDoc.find('//forecast').splice(0, Config.forecastsCount).map(i => {
                     var when = i.get('period').text();
-                    var temp = i.get('temperatures/temperature').text() + '°';
+                    var temp = parseInt(i.get('temperatures/temperature').text());
                     var what = i.get('abbreviatedForecast/textSummary').text();
-                    var iconCode = i.get('abbreviatedForecast/iconCode').text();
+                    var iconCode = parseInt(i.get('abbreviatedForecast/iconCode').text());
                     var accumulationAmount = i.get('precipitation/accumulation/amount');
 
                     accumulationAmount = accumulationAmount ? accumulationAmount.text() + accumulationAmount.attr('units').value() : '';

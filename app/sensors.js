@@ -63,7 +63,12 @@ function getSensors() {
                         temp: getValue(sensors, 39, 'Temp'),
                         hum: getValue(sensors, 39, 'Humidity'),
                         volt: getValue(sensors, 42, 'Voltage', 2),
-                    }
+                    },
+                    garage: {
+                        temp: getValue(sensors, 59, 'Temp'),
+                        hum: getValue(sensors, 59, 'Humidity'),
+                        volt: getValue(sensors, 60, 'Voltage', 2),
+                    },
                 });
             }
         });

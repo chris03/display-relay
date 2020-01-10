@@ -1,6 +1,6 @@
 const Config = {
-    url: 'http://dd.weather.gc.ca/citypage_weather/xml/QC/s0000712_f.xml',
-    // url: 'http://dd.weather.gc.ca/citypage_weather/xml/ON/s0000418_e.xml',
+    // Full list: https://dd.weather.gc.ca/citypage_weather/xml/siteList.xml
+    url: 'https://dd.weather.gc.ca/citypage_weather/xml/QC/s0000145_f.xml',
     forecastsCount: 4
 };
 

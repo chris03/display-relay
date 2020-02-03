@@ -1,7 +1,3 @@
-const Config = {
-    url: 'http://10.13.37.3:8080/json.htm?type=devices&filter=all&used=true'
-};
-
 var request = require('request');
 
 function getValue(sensors, id, property) {
@@ -31,7 +27,7 @@ function getSensors() {
 
     return new Promise(function (resolve, reject) {
 
-        request(Config.url, function (error, response, body) {
+        request(domoServerUrl + '/json.htm?type=devices&filter=all&used=true', function (error, response, body) {
             if (error) {
                 reject(error);
             } else {

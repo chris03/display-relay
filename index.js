@@ -1,3 +1,5 @@
+const domoServerUrl = 'http://10.13.37.3:8080'
+
 const weather = require('./app/weather.js');
 const sensors = require('./app/sensors.js');
 const http = require('http');
@@ -30,7 +32,7 @@ const notFoundHandler = response => {
 
 var request = require('request');
 const send = (params) => {
-    request('http://127.0.0.1:8080/json.htm?type=command&param=udevice&' + params, function (error, response, body) {
+    request(domoServerUrl + '/json.htm?type=command&param=udevice&' + params, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body);
         }

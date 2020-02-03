@@ -1,12 +1,14 @@
 const domoServerUrl = 'http://10.13.37.3:8080'
+const port = 3000
 
 const weather = require('./app/weather.js');
 const sensors = require('./app/sensors.js');
 const http = require('http');
+const request = require('request');
 const querystring = require('querystring');
-var fs = require('fs');
+const fs = require('fs');
+
 var data = {};
-const port = 3000
 
 const jsonDataHandler = response => {
     response.setHeader('Content-Type', 'application/json');
@@ -30,11 +32,13 @@ const notFoundHandler = response => {
     response.end("<h1>Not found</h1>");
 };
 
-var request = require('request');
+
 const send = (params) => {
     request(domoServerUrl + '/json.htm?type=command&param=udevice&' + params, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body);
+        } else {
+            console.error(error);
         }
     });
 };
@@ -67,7 +71,7 @@ const updateSensorsData = async () => {
 
     console.log('Updating sensors...');
 
-    let newData = await sensors.getSensors();
+    let newData = await sensors.getSensors(domoServerUrl);
     data = { ...data, ...newData };
 
     var now = new Date();

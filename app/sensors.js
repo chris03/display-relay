@@ -23,11 +23,11 @@ function formatNegativeNumber(val) {
     return result;
 }
 
-function getSensors() {
+function getSensors(serverUrl) {
 
     return new Promise(function (resolve, reject) {
 
-        request(domoServerUrl + '/json.htm?type=devices&filter=all&used=true', function (error, response, body) {
+        request(serverUrl + '/json.htm?type=devices&filter=all&used=true', function (error, response, body) {
             if (error) {
                 reject(error);
             } else {

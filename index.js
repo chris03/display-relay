@@ -3,6 +3,7 @@ const port = 3000
 
 const weather = require('./app/weather.js');
 const sensors = require('./app/sensors.js');
+const sensorsGraph = require('./app/sensorsGraph.js');
 const http = require('http');
 const request = require('request');
 const querystring = require('querystring');
@@ -80,6 +81,13 @@ const updateSensorsData = async () => {
     console.log('Done: %dms', (new Date() - start));
 };
 
+const graph = (response) => {
+    sensorsGraph.getSensorsGraph(domoServerUrl, function (result) {
+        response.writeHead(200, { "Content-Type": "application/json" });
+        response.end(JSON.stringify(result));
+    });
+};
+
 const requestHandler = (request, response) => {
 
     console.log(request.url);
@@ -115,6 +123,8 @@ const requestHandler = (request, response) => {
             break;
         case "/json":
             jsonDataHandler(response);
+        case '/graph':
+            graph(response);
             break;
         default:
             notFoundHandler(response);

@@ -49,7 +49,9 @@ module.exports.getSensorsGraph = function (serverUrl, callback) {
                     data: {
                         text: itemData.Data,
                         temp: itemData.Temp,
-                        voltage: itemData.Voltage
+                        voltage: itemData.Voltage,
+                        current: itemData.Current,
+                        lastUpdate: itemData.LastUpdate
                     }
                 } : {});
             });

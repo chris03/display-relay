@@ -20,7 +20,13 @@ const get = function (url) {
             if (error) {
                 reject(error);
             } else {
-                resolve(body);
+                try {
+                    resolve(JSON.parse(body));
+                }
+                catch (e) {
+                    console.error('Server response: ', body);
+                    reject(e);
+                }
             }
         });
     });
@@ -30,27 +36,50 @@ module.exports.getSensorsGraph = function (serverUrl, callback) {
     let obj = {};
     const start = new Date()
 
-    Promise.all(sensors.map(async (item) => {
-        let url = util.format('%s/json.htm?type=graph&sensor=%s&idx=%s&range=day', serverUrl, item.type, item.id);
-        let response = get(url);
+    // Get current sensor data
+    get(serverUrl + '/json.htm?type=devices&filter=all&used=true&plan=0').then(data => {
 
-        try {
-            let parsedResponse = JSON.parse(await response);
-            if (parsedResponse.status === 'OK') {
-                obj[item.name] = parsedResponse.result;
-            } else {
-                throw 'Status is NOT OK!';
+        console.log(data);
+
+        if (data && data.status === 'OK') {
+            sensors.forEach(item => {
+                var itemData = data.result.find(i => i.idx === item.id.toString());
+
+                obj[item.name] = (itemData ? {
+                    data: {
+                        text: itemData.Data,
+                        temp: itemData.Temp,
+                        voltage: itemData.Voltage
+                    }
+                } : {});
+            });
+        } else {
+            console.error("Failed to get sensor data.");
+        }
+
+        // Get garph data
+        Promise.all(sensors.map(async (item) => {
+            let url = util.format('%s/json.htm?type=graph&sensor=%s&idx=%s&range=day', serverUrl, item.type, item.id);
+            let response = get(url);
+
+            try {
+                let parsedResponse = await response;
+                if (parsedResponse.status === 'OK') {
+                    obj[item.name].graph = parsedResponse.result;
+                } else {
+                    throw 'Status is NOT OK!';
+                }
             }
-        }
-        catch (e) {
-            console.error(item.name + ' failed.', e);
-        }
+            catch (e) {
+                console.error(item.name + ' failed.', e);
+            }
 
-        return response;
+            return response;
 
-    })).then(function () {
-        obj.outputTime = new Date() - start;
+        })).then(function () {
+            obj.outputTime = new Date() - start;
 
-        callback(obj);
+            callback(obj);
+        });
     });
 };

@@ -5,7 +5,7 @@ const sensors = [
     //    { id: 48, name: 'flow', type: 'Percentage' },
     //    { id: 47, name: 'lux', type: 'counter' },
     { id: 45, name: 'tempOut', type: 'temp' },
-    //    { id: 43, name: 'tempPool', type: 'temp' },
+    { id: 43, name: 'tempPool', type: 'temp' },
     //    { id: 46, name: 'tempHeater', type: 'temp' },
     //    { id: 52, name: 'energy', type: 'counter' },
     { id: 61, name: 'solarVolt', type: 'counter' },

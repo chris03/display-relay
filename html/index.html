@@ -35,38 +35,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col" style="border: solid 1px;">
-                        <h3 style="margin-bottom: 0px;">{{data.air.temp}}
-                            <small style="font-size: 12px">{{data.air.hum}}</small>
+                    <div class="col" style="border: solid 1px;" ng-repeat="s in data.sensors">
+                        <h3 style="margin-bottom: 0px;">{{s.temp}}
+                            <small style="font-size: 12px">{{s.hum}}</small>
+                            <span style="font-size: 10px; vertical-align: top;">{{s.volt}}</span>
                         </h3>
-                        Chauffage
-                    </div>
-                    <div class="col" style="border: solid 1px;">
-                        <h3 style="margin-bottom: 0px;">{{data.outside.temp}}
-                            <small style="font-size: 12px">{{data.outside.hum}}</small>
-                        </h3>
-                        Extérieur
-                    </div>
-                    <div class="col" style="border: solid 1px;">
-                        <h3 style="margin-bottom: 0px;">{{data.garage.temp}}
-                            <small style="font-size: 12px">{{data.garage.hum}}</small>
-                            <span style="font-size: 10px; vertical-align: top;">{{data.garage.volt}}</span>
-                        </h3>
-                        Garage
-                    </div>
-                    <div class="col" style="border: solid 1px;">
-                        <h3 style="margin-bottom: 0px;">{{data.arduino1.temp}}
-                            <small style="font-size: 12px">{{data.arduino1.hum}}</small>
-                            <span style="font-size: 10px; vertical-align: top;">{{data.arduino1.volt}}</span>
-                        </h3>
-                        Chambre
-                    </div>
-                    <div class="col" style="border: solid 1px;">
-                        <h3 style="margin-bottom: 0px;">{{data.arduino2.temp}}
-                            <small style="font-size: 12px">{{data.arduino2.hum}}</small>
-                            <span style="font-size: 10px; vertical-align: top;">{{data.arduino2.volt}}</span>
-                        </h3>
-                        Salon
+                        {{s.name}}
                     </div>
                 </div>
             </div>

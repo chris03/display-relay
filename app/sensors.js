@@ -62,6 +62,13 @@ function getSensors(serverUrl) {
                         //pump: getValue(sensors, 49, 'Data'),
                         up: isUp(sensors, 43, parsedBody.ServerTime)
                     },
+                    air: {
+                        name: getValue(sensors, 71, 'Name'),
+                        temp: getValue(sensors, 71, 'Temp'),
+                        air: getValue(sensors, 69, 'Data'),
+                        airQ: getValue(sensors, 69, 'Quality'),
+                        up: isUp(sensors, 71, parsedBody.ServerTime)
+                    },
                     sensors: [
                         // Exterieur
                         {
@@ -100,14 +107,6 @@ function getSensors(serverUrl) {
                             hum: getValue(sensors, 59, 'Humidity'),
                             volt: getValue(sensors, 60, 'Voltage', 2),
                             up: isUp(sensors, 59, parsedBody.ServerTime)
-                        },
-                        // Bureau
-                        {
-                            name: getValue(sensors, 71, 'Name'),
-                            temp: getValue(sensors, 71, 'Temp'),
-                            air: getValue(sensors, 69, 'Data'),
-                            airQ: getValue(sensors, 69, 'Quality'),
-                            up: isUp(sensors, 71, parsedBody.ServerTime)
                         }]
                 });
             }

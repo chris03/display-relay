@@ -10,12 +10,12 @@ function getFloat(sensors, id, property, precision) {
     return sensor == undefined || sensor[property] == undefined ? '' : parseFloat(sensor[property]).toFixed(precision || 0);
 }
 
-function isUp(sensors, id) {
+function isUp(sensors, id, serverTime) {
     var result = false;
     var sensor = sensors.find(s => s.idx == id);
 
     if (sensor != undefined && sensor['LastUpdate'] != undefined) {
-        var now = new Date();
+        var now = new Date(serverTime);
         var lastUpdate = new Date(sensor['LastUpdate']);
 
         // Total minutes difference
@@ -47,7 +47,8 @@ function getSensors(serverUrl) {
             if (error) {
                 reject(error);
             } else {
-                var sensors = JSON.parse(body).result;
+                var parsedBody = JSON.parse(body);
+                var sensors = parsedBody.result;
                 // Return data
                 resolve({
                     pool: {
@@ -57,41 +58,41 @@ function getSensors(serverUrl) {
                         lux: getValue(sensors, 47, 'Data'),
                         energy: getValue(sensors, 52, 'Data'),
                         pump: getValue(sensors, 49, 'Data'),
-                        up: isUp(sensors, 43)
+                        up: isUp(sensors, 43, parsedBody.ServerTime)
                     },
                     sensors: [
                         {
                             name: getValue(sensors, 45, 'Name'),
                             temp: getValue(sensors, 45, 'Temp'),
                             hum: getValue(sensors, 45, 'Humidity'),
-                            up: isUp(sensors, 45)
+                            up: isUp(sensors, 45, parsedBody.ServerTime)
                         },
                         {
                             name: getValue(sensors, 51, 'Name'),
                             temp: getValue(sensors, 51, 'Temp'),
                             hum: getValue(sensors, 51, 'Humidity'),
-                            up: isUp(sensors, 51)
+                            up: isUp(sensors, 51, parsedBody.ServerTime)
                         },
                         {
                             name: getValue(sensors, 38, 'Name'),
                             temp: getValue(sensors, 38, 'Temp'),
                             hum: getValue(sensors, 38, 'Humidity'),
                             volt: getValue(sensors, 44, 'Voltage', 2),
-                            up: isUp(sensors, 38)
+                            up: isUp(sensors, 38, parsedBody.ServerTime)
                         },
                         {
                             name: getValue(sensors, 39, 'Name'),
                             temp: getValue(sensors, 39, 'Temp'),
                             hum: getValue(sensors, 39, 'Humidity'),
                             volt: getValue(sensors, 42, 'Voltage', 2),
-                            up: isUp(sensors, 39)
+                            up: isUp(sensors, 39, parsedBody.ServerTime)
                         },
                         {
                             name: getValue(sensors, 59, 'Name'),
                             temp: getValue(sensors, 59, 'Temp'),
                             hum: getValue(sensors, 59, 'Humidity'),
                             volt: getValue(sensors, 60, 'Voltage', 2),
-                            up: isUp(sensors, 59)
+                            up: isUp(sensors, 59, parsedBody.ServerTime)
                         }]
                 });
             }

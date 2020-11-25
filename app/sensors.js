@@ -100,13 +100,14 @@ function getSensors(serverUrl) {
                             volt: getValue(sensors, 42, 'Voltage', 2),
                             up: isUp(sensors, 39, parsedBody.ServerTime)
                         },
-                        // Arduino3 (Garage)
+                        // Arduino3 (Garage) id: 59 id volt: 60
+                        // Arduino4 72,73
                         {
-                            name: getValue(sensors, 59, 'Name'),
-                            temp: getValue(sensors, 59, 'Temp'),
-                            hum: getValue(sensors, 59, 'Humidity'),
-                            volt: getValue(sensors, 60, 'Voltage', 2),
-                            up: isUp(sensors, 59, parsedBody.ServerTime)
+                            name: getValue(sensors, 72, 'Name'),
+                            temp: getValue(sensors, 72, 'Temp'),
+                            hum: getValue(sensors, 72, 'Humidity'),
+                            volt: getValue(sensors, 73, 'Voltage', 2),
+                            up: isUp(sensors, 72, parsedBody.ServerTime)
                         }]
                 });
             }

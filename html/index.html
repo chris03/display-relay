@@ -36,9 +36,9 @@
                 </div>
                 <div class="row">
                     <div class="col" style="border: solid 1px;" ng-repeat="s in data.sensors">
-                        <h3 style="margin-bottom: 0px;">{{s.temp}}
-                            <small style="font-size: 12px">{{s.hum}}</small>
-                            <span style="font-size: 10px; vertical-align: top;">{{s.volt}}</span>
+                        <h3 style="margin-bottom: 0px;">{{s.up ? s.temp : '?'}}
+                            <small style="font-size: 12px">{{s.up ? s.hum : ''}}</small>
+                            <span style="font-size: 10px; vertical-align: top;">{{s.up ? s.volt : ''}}</span>
                         </h3>
                         {{s.name}}
                     </div>

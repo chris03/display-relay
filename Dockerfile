@@ -24,7 +24,9 @@ ENV ASPNETCORE_URLS=http://+:${PORT}
 
 WORKDIR /app
 
-RUN adduser \
+RUN apk add tzdata \
+ && rm -rf /var/cache/apk/* \
+ && adduser \
 --disabled-password \
 --gecos "" \
 --home "$(pwd)" \

@@ -186,7 +186,7 @@ namespace displayRelay.Services
 
 
             stopwatch.Stop();
-            logger.LogInformation("Updated weather data in {0}ms", stopwatch.ElapsedMilliseconds);
+            logger.LogInformation("Updated sensors data in {0}ms", stopwatch.ElapsedMilliseconds);
         }
 
         private async Task<JToken> GetJsonAsync(string url)

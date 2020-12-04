@@ -44,7 +44,7 @@ namespace displayRelay.Services
             };
 
             var xmlWarnings = xmlDoc.XPathSelectElement("warnings/event");
-            var warnings = xmlWarnings?.Attribute("description")?.Value.Replace(" EN VIGUEUR", string.Empty);
+            var warnings = xmlWarnings?.Attribute("description")?.Value.Replace(" EN VIGUEUR", string.Empty) ?? string.Empty;
 
             var forecasts = xmlDoc.XPathSelectElements("//forecast")
                 .Take(ForecastCount)

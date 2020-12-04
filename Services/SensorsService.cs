@@ -188,6 +188,26 @@ namespace displayRelay.Services
             stopwatch.Stop();
             logger.LogInformation("Updated sensors data in {0}ms", stopwatch.ElapsedMilliseconds);
         }
+        public int CalculateSleepTime()
+        {
+            var now = DateTime.Now;
+
+            if (!string.IsNullOrEmpty(config.TimeZone))
+            {
+                // Try to convert timezone
+                try
+                {
+                    var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(config.TimeZone);
+                    now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+                }
+                catch (TimeZoneNotFoundException e)
+                {
+                    logger.LogWarning(e, $"Could not find timezone: {config.TimeZone}");
+                }
+            }
+
+            return now.Hour >= 23 || now.Hour < 6 ? 30 : 3;
+        }
 
         private async Task<JToken> GetJsonAsync(string url)
         {

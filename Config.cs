@@ -9,5 +9,7 @@
         public string UpdateSensorsJobCron { get; private set; }
 
         public string UpdateWeatherJobCron { get; private set; }
+
+        public string TimeZone { get; private set; }
     }
 }

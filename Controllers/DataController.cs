@@ -63,12 +63,7 @@ namespace displayRelay.Controllers
                 MergeArrayHandling = MergeArrayHandling.Merge
             });
 
-            // Compute sleep time
-            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
-            var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
-
-            var sleepFor = now.Hour >= 23 || now.Hour < 6 ? 30 : 3;
-            data.Add("sleepFor", sleepFor);
+            data.Add("sleepFor", sensorsService.CalculateSleepTime());
 
             var json = data.ToString(Formatting.None);
 

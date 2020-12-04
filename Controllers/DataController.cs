@@ -64,7 +64,9 @@ namespace displayRelay.Controllers
             });
 
             // Compute sleep time
-            var now = DateTime.Now;
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+
             var sleepFor = now.Hour >= 23 || now.Hour < 6 ? 30 : 3;
             data.Add("sleepFor", sleepFor);
 

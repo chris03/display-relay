@@ -29,9 +29,6 @@ jobs:
       uses: matootie/github-docker@v3.1.0
       with:
         accessToken: ${{ github.token }}
-        tag: |
-          latest
-          ${{ github.sha }}
           
     - name: Print URL
       run: echo ${{ steps.publish.outputs.imageURL }}

@@ -23,3 +23,15 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+    
+    - name: Publish container
+      id: publish
+      uses: matootie/github-docker@v3.1.0
+      with:
+        accessToken: ${{ github.token }}
+        tag: |
+          latest
+          ${{ github.sha }}
+          
+    - name: Print URL
+      run: echo ${{ steps.publish.outputs.imageURL }}

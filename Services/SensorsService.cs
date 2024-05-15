@@ -144,10 +144,11 @@ namespace displayRelay.Services
                 {
                         // Exterieur
                         new  {
-                            name = GetValue<string>( 45, "Name"),
-                            temp = GetDecimal(45, "Temp"),
-                            hum = GetDecimal(45, "Humidity"),
-                            up = IsUp( 45)
+                            name = GetValue<string>(76, "Name"),
+                            temp = GetDecimal(76, "Temp"),
+                            hum = GetDecimal(76, "Humidity"),
+                            volt = GetDecimal(60, "Voltage"),
+                            up = IsUp(76)
                         },
                         // ESP-RFM-Relay
                         new {

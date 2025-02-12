@@ -1,10 +1,10 @@
 ﻿ARG RID=linux-musl-x64
-ARG RUNTIME_TAG=5.0-alpine
+ARG RUNTIME_TAG=9.0-alpine
 ARG USER=dotnet
 ARG UID=1001
 ARG PORT=3000
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0-buster-slim AS build
 ARG RID
 
 WORKDIR /app

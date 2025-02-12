@@ -92,7 +92,7 @@ namespace displayRelay.Services
                         .Replace("intermittente", "inter.")
                         .Replace("Généralement ", "")
                         .Replace("Quelques", "±")
-                        .Replace("parfois", "~")
+                        .Replace("parfois ", "~")
                         .Replace("averses de ", "")
                         .Replace(" ou ", "/")
                         .Replace("de neige/de pluie", "neige/pluie");

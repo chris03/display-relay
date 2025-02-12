@@ -75,7 +75,7 @@ namespace displayRelay.Services
                         .Replace("de soleil et de nuages", "soleil/nuages")
                         .Replace("Minimum", "Min.")
                         .Replace("Maximum", "Max.")
-                        .Replace("Possibilité", "P.")
+                        .Replace("Possibilité", "Pos.")
                         .Replace("Partiellement", "Part.")
                         .Replace("d'averses de", "de")
                         .Replace("Alternance ", "")
@@ -92,6 +92,7 @@ namespace displayRelay.Services
                         .Replace("intermittente", "inter.")
                         .Replace("Généralement ", "")
                         .Replace("Quelques", "±")
+                        .Replace("parfois", "~")
                         .Replace("averses de ", "")
                         .Replace(" ou ", "/")
                         .Replace("de neige/de pluie", "neige/pluie");

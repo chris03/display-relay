@@ -76,6 +76,7 @@ namespace displayRelay.Services
                         .Replace("Minimum", "Min.")
                         .Replace("Maximum", "Max.")
                         .Replace("Possibilité", "Pos.")
+                        .Replace("poudrerie", "poudre.")
                         .Replace("Partiellement", "Part.")
                         .Replace("d'averses de", "de")
                         .Replace("Alternance ", "")
@@ -93,6 +94,7 @@ namespace displayRelay.Services
                         .Replace("Généralement ", "")
                         .Replace("Quelques", "±")
                         .Replace("parfois ", "~")
+                        .Replace(" et ", "&")
                         .Replace("averses de ", "")
                         .Replace(" ou ", "/")
                         .Replace("de neige/de pluie", "neige/pluie");

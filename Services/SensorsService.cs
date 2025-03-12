@@ -207,7 +207,7 @@ namespace displayRelay.Services
                 }
             }
 
-            return now.Hour >= 23 || now.Hour < 6 ? 30 : 3;
+            return now.Hour >= 23 || now.Hour < 6 ? 30 : 1;
         }
 
         private async Task<JToken> GetJsonAsync(string url)

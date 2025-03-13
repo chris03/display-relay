@@ -47,7 +47,8 @@ namespace displayRelay.Services
 
             var now = DateTime.Now;
             var collectionType = string.Empty;
-            var collectionDate = now.Hour >= ShowAfterHour ? now.AddDays(1).Date : now.Date;
+            var isTomorrow = now.Hour >= ShowAfterHour;
+            var collectionDate = isTomorrow ? now.AddDays(1).Date : now.Date;
 
 
             if (garbageDates.Contains(collectionDate))
@@ -68,6 +69,11 @@ namespace displayRelay.Services
             if (bulkyItemDates.Contains(collectionDate))
             {
                 collectionType = "Encombrants";
+            }
+
+            if (!string.IsNullOrEmpty(collectionType))
+            {
+                collectionType += isTomorrow ? " demain" : " ce matin";
             }
 
             // Hide collection between these hours

@@ -34,6 +34,7 @@ namespace displayRelay
             services.AddSingleton<HttpClient>();
             services.AddSingleton<SensorsService>();
             services.AddSingleton<WeatherService>();
+            services.AddSingleton<WasteCollectionService>();
 
             // Job Scheduling
             services.AddScheduler(ctx =>

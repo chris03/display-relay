@@ -18,11 +18,13 @@ namespace displayRelay.Controllers
     {
         private readonly SensorsService sensorsService;
         private readonly WeatherService weatherService;
+        private readonly WasteCollectionService wasteCollectionService;
 
-        public DataController(SensorsService sensorsService, WeatherService weatherService)
+        public DataController(SensorsService sensorsService, WeatherService weatherService, WasteCollectionService wasteCollectionService)
         {
             this.sensorsService = sensorsService;
             this.weatherService = weatherService;
+            this.wasteCollectionService = wasteCollectionService;
         }
 
         [HttpGet]
@@ -64,6 +66,8 @@ namespace displayRelay.Controllers
             });
 
             data.Add("sleepFor", sensorsService.CalculateSleepTime());
+
+            data.Add("nextCollect", wasteCollectionService.GetNextCollection());
 
             var json = data.ToString(Formatting.None);
 

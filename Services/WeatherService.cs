@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -29,12 +30,36 @@ namespace displayRelay.Services
 
         public object Data { get; private set; } = new { };
 
+
+        private async Task<string> GetWeatherXmlFromNewStupidLayout()
+        {
+            var weatherUrl = $"{this.config.WeatherBaseUrl}/{DateTime.UtcNow.Hour}";
+            var fileNameSuffix = $"MSC_CitypageWeather_{this.config.WeatherCityCode}_{this.config.WeatherLang}\\.xml";
+            var htmlFileList = await httpClient.GetStringAsync(weatherUrl);
+
+            // Find xml filename
+            var match = Regex.Match(htmlFileList, $">([^<>]*?_{fileNameSuffix})<");
+
+            if (!match.Success)
+            {
+                throw new MissingMemberException($"Failed to find weather file ending with '{fileNameSuffix}' from {weatherUrl}");
+            }
+
+            var fileName = match.Groups[1].Value;
+
+            Console.WriteLine(fileName);
+
+            return $"{weatherUrl}/{fileName}";
+        }
+
         public async Task UpdateAsync()
         {
             var stopwatch = Stopwatch.StartNew();
 
+            var xmlFileUrl = await this.GetWeatherXmlFromNewStupidLayout();
+
             // Get XML document
-            await using var stream = await httpClient.GetStreamAsync(config.WeatherXmlUrl);
+            await using var stream = await httpClient.GetStreamAsync(xmlFileUrl);
             var xmlDoc = XElement.Load(stream);
 
             var actual = new

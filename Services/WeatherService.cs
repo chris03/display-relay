@@ -33,7 +33,7 @@ namespace displayRelay.Services
 
         private async Task<string> GetWeatherXmlFromNewStupidLayout()
         {
-            var weatherUrl = $"{this.config.WeatherBaseUrl}/{DateTime.UtcNow.Hour}";
+            var weatherUrl = $"{this.config.WeatherBaseUrl}/{DateTime.UtcNow.Hour:00}";
             var fileNameSuffix = $"MSC_CitypageWeather_{this.config.WeatherCityCode}_{this.config.WeatherLang}\\.xml";
             var htmlFileList = await httpClient.GetStringAsync(weatherUrl);
 
